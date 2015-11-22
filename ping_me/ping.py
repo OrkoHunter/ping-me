@@ -16,8 +16,8 @@ def main():
     day = 'none'
     month = 'none'
     year = 'none'
-    hour = 'none'
-    minute = 'none'
+    hour = 0
+    minute = 0
 
     if optlist != []:
     # proper time and date are given using -d and -t flags
