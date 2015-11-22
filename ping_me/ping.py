@@ -190,7 +190,21 @@ def usage():
 
 
 def detailed_usage():
-    pass
+    print("Welcome to the detailed documentation of ping-me !\n")
+    print("ping-me works well with time and date flags already. "
+          + "Use 'ping-me -h' for that option."
+          + "However, ping-me is smart enough to work without flags.\n")
+    print("Examples : ")
+    print("\t\t1. ping-me to call mom tonight")
+    print("\t\t2. ping-me to buy milk early today")
+    print("\t\t3. ping-me to go home seven days from now")
+    print("\t\t4. ping-me to take a nap this afternoon")
+    print("\t\t5. pint-me to go workout next month")
+    print("")
+    print("Report (and track process on fixing) bugs on "
+          + "https://github.com/OrkoHunter/ping-me. Or simply write a mail "
+          + "to Himanshu Mishra at himanshumishra[at]iitkgp[dot]ac[dot]in")
+
 if __name__ == "__main__":
 
     main()
