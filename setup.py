@@ -21,7 +21,7 @@ if __name__ == "__main__":
         long_description = open('README.md').read(),
         packages = ['ping_me'],
         license = 'Apache License',
-        entry_point = {
+        entry_points = {
             'console_scripts': [
             'ping-me = ping_me.ping:main'
             ]
