@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Command line execution listener module of ping-me"""
 from __future__ import print_function
 import calendar
@@ -190,9 +191,26 @@ def usage():
 
 
 def detailed_usage():
-    print("Welcome to the detailed documentation of ping-me !\n")
+    print("Welcome to the detailed documentation of ping-me !")
+    # Inspired from 'import this'
+    s = " "; l = "_ "; r = " _"; f = "/"; b = "\\"; p = "|"; d = "— "
+    print(s*6 + l*5 + s + l*4 + r + s*12 + l + r*5 + s*2 + r + s*8 + l +
+          s*7 + l*4)
+    print(s*5 + f + s*8 + f + s*5 + f + s*4 + f + s + b + s*10 + f + s + f +
+          s*12 + f + s + b + s*6 + f + s + p + s*6 + f + s*7)
+    print(s*4 + f + s*8 + f + s*5 + f + s*4 + f + s*3 + b + s*8 + f + s + f +
+          s*12 + f + s*3 + b + s*4 + f + s*2 + p + s*5 + f + s*7)
+    print(s*3 + f + r*4 + f + s*5 + f + s*4 + f + s*5 + b + s*6 + f + s + f +
+          s*2 + r*4 + s*2 + f + 5*s + b + s*2 + f + s*3 + p + s*4 + f + l*4)
+    print(s*2 + f + s*14 + f + s*4 + f + s*7 + b + s*4 + f + s + f + s*9 + f +
+          s*2 + f + s*7 + b + f + s*4 + p + s*3 + f + s*7)
+    print(s + f + s*14 + f + s*4 + f + s*9 + b + s*2 + f + s + f + s*9 + f +
+          s*2 + f + s*14 + p + s*2 + f + s*7)
+    print(f + s*11 +  d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 + f
+          + s*15 + p + s + f + (r*4)[1:])
+    print("")
     print("ping-me works well with time and date flags already. "
-          + "Use 'ping-me -h' for that option."
+          + "Use 'ping-me -h' for that option. "
           + "However, ping-me is smart enough to work without flags.\n")
     print("Examples : ")
     print("\t\t1. ping-me to call mom tonight")
