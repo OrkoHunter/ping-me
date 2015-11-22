@@ -19,7 +19,7 @@ if __name__ == "__main__":
         author_email = 'himanshumishra@iitkgp.ac.in',
         description = 'Cross platform personalized ping',
         long_description = open('README.md').read(),
-        packages = ['ping_me'],
+        packages = ['ping_me', 'ping_me.depends'],
         license = 'Apache License',
         entry_points = {
             'console_scripts': [
