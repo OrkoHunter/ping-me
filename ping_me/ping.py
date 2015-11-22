@@ -135,6 +135,11 @@ def main():
                 month_index = message.index('month')
                 message.remove(message[month_index])
                 message.remove(message[month_index - 1])
+            elif 'this' in message and 'month' in message:
+                day = 28
+                month_index = message.index('month')
+                message.remove(message[month_index])
+                message.remove(message[month_index - 1])
 
             if 'early' in message and 'morning' in message:
                 hour = _early_morning
@@ -144,11 +149,9 @@ def main():
             elif 'morning' in message:
                 hour = _morning
                 message.remove('morning')
-            elif 'after' in message and 'noon' in message:
+            elif 'afternoon' in message:
                 hour = _after_noon
-                noon_index = message.index('noon')
-                message.remove(message[noon_index])  # Remove 'noon'
-                message.remove(message[noon_index - 1])  # Remove 'after'
+                message.remove('afternoon')
             elif 'noon' in message:
                 hour = _noon
                 message.remove('noon')
@@ -169,7 +172,10 @@ def main():
 
             if 'to' in message:
                 message.remove('to')
-
+            if message[0]=='this':
+                message.pop(0)
+            elif message[-1]=='this':
+                message.pop()
             ping_me.engine(message, year=year, month=month,
                            day=day, hour=hour, minute=minute)
 
@@ -185,7 +191,6 @@ def usage():
 
 def detailed_usage():
     pass
-
 if __name__ == "__main__":
 
     main()
