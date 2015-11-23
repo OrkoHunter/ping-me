@@ -73,12 +73,11 @@ def main():
         ping_me.engine(message, year=year, month=month,
                        day=day, hour=hour, minute=minute)
     else:
-        # Nothing is even, just a plain string.
-        # $ ping-me to call mom tonight
+        # Nothing is given, just a plain string.
         if message == []:
             usage()
         else:
-            # print("pint-me ain't that smart now. Use the flags instead.")
+            # ~~print("pint-me ain't that smart now. Use the flags instead.")~~
             # time to be smart
 
             """
@@ -122,7 +121,7 @@ def main():
                         today_index = message.index('now')
                     except ValueError:
                         try:
-                            today_index = message.index('finally')
+                            today_index = message.index('today')
                         except ValueError:
                             print("Did you mean 'X days from now'?")
                             sys.exit(2)
