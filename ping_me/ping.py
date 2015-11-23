@@ -11,7 +11,9 @@ from ping_me.depends import text2num
 
 month_key = dict((v, k) for k, v in
                  enumerate(list(calendar.month_abbr)[1:], 1))
-
+weekdays_list = [i[:3].lower() for i in list(calendar.day_name)]
+week_key = dict((v, k) for k, v in
+                 enumerate(weekdays_list, 1))
 
 def main():
     try:
@@ -105,9 +107,11 @@ def main():
                     day = (today + datetime.timedelta(days=_days_delta)).day
                 except:
                     try:
-                        day = message[message.index('days') - 1]
-                        day = text2num.text2num(day)
-                        day = (today + datetime.timedelta(days=day)).day
+                        days = message[message.index('days') - 1]
+                        days = text2num.text2num(days)
+                        day = (today + datetime.timedelta(days=days)).day
+                        month = (today + datetime.timedelta(days=days)).month
+                        year = (today + datetime.timedelta(days=days)).year
                     except:
                         print("ERROR : How many days again?")
                         sys.exit(2)
@@ -141,6 +145,24 @@ def main():
                 month_index = message.index('month')
                 message.remove(message[month_index])
                 message.remove(message[month_index - 1])
+            elif 'on' in message:
+                # Could be a weekday, could be a date
+                _on_indices = [i for i, x in enumerate(message) if x == "on"]
+                for i in range(len(_on_indices)):
+                    if (_is_a_weekday(message[_on_indices[i] + 1])):
+                        _weekday = message[_on_indices[i] + 1]
+                        _weekday = week_key[_weekday[:3]]
+                        _del_weekday = _weekday - today.isoweekday()
+                        _del_weekday += 7 if _del_weekday<=0 else 0
+                        _next_day = today + datetime.timedelta(days=_del_weekday)
+                        day = _next_day.day
+                        month = _next_day.month
+                        year = _next_day.year
+                        del message[_on_indices[i] + 1]
+                        del message[_on_indices[i]]
+                    elif (_is_a_date(message[_on_indices[i] + 1])):
+                        # do whatever you have to do for a date
+                        pass
 
             if 'early' in message and 'morning' in message:
                 hour = _early_morning
@@ -179,6 +201,39 @@ def main():
                 message.pop()
             ping_me.engine(message, year=year, month=month,
                            day=day, hour=hour, minute=minute)
+
+
+def _is_a_weekday(day):
+    weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday',
+                'friday', 'saturday']
+    if day.lower() in weekdays:
+        return True
+    else:
+        for i in range(len(weekdays)):
+            weekdays[i] = weekdays[i][:3]
+        if day.lower() in weekdays:
+            return True
+        else:
+            return False
+
+def _is_a_date(date):
+    for i in date.split('-'):  # e.g. November-25-2015
+        try:
+        # Day and year would be integer convertible
+            if len(str(int(i))) == 4:
+                # Year detected
+                pass
+            elif len(str(int(i))) == 2 or len(str(int(i))) == 1:
+                # Day detected
+                pass
+        except ValueError:
+            # Month would be just a string
+            if _is_weekday(date):
+                return False
+            else:
+                pass
+    return True
+
 
 
 def usage():
