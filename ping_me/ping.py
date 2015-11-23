@@ -272,7 +272,7 @@ def detailed_usage():
     print("\t\t2. ping-me to buy milk early today")
     print("\t\t3. ping-me to go home seven days from now")
     print("\t\t4. ping-me to take a nap this afternoon")
-    print("\t\t5. pint-me to go workout next month")
+    print("\t\t5. ping-me to go workout next month")
     print("")
     print("Report (and track process on fixing) bugs on "
           + "https://github.com/OrkoHunter/ping-me. Or simply write a mail "
