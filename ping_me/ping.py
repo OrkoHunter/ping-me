@@ -13,7 +13,8 @@ month_key = dict((v, k) for k, v in
                  enumerate(list(calendar.month_abbr)[1:], 1))
 weekdays_list = [i[:3].lower() for i in list(calendar.day_name)]
 week_key = dict((v, k) for k, v in
-                 enumerate(weekdays_list, 1))
+                enumerate(weekdays_list, 1))
+
 
 def main():
     try:
@@ -152,8 +153,9 @@ def main():
                         _weekday = message[_on_indices[i] + 1]
                         _weekday = week_key[_weekday[:3]]
                         _del_weekday = _weekday - today.isoweekday()
-                        _del_weekday += 7 if _del_weekday<=0 else 0
-                        _next_day = today + datetime.timedelta(days=_del_weekday)
+                        _del_weekday += 7 if _del_weekday <= 0 else 0
+                        _next_day = today + \
+                            datetime.timedelta(days=_del_weekday)
                         day = _next_day.day
                         month = _next_day.month
                         year = _next_day.year
@@ -194,9 +196,9 @@ def main():
 
             if 'to' in message:
                 message.remove('to')
-            if message[0]=='this':
+            if message[0] == 'this':
                 message.pop(0)
-            elif message[-1]=='this':
+            elif message[-1] == 'this':
                 message.pop()
             ping_me.engine(message, year=year, month=month,
                            day=day, hour=hour, minute=minute)
@@ -215,6 +217,7 @@ def _is_a_weekday(day):
         else:
             return False
 
+
 def _is_a_date(date):
     for i in date.split('-'):  # e.g. November-25-2015
         try:
@@ -232,7 +235,6 @@ def _is_a_date(date):
             else:
                 pass
     return True
-
 
 
 def usage():
@@ -260,7 +262,7 @@ def detailed_usage():
           s*2 + f + s*7 + b + f + s*4 + p + s*3 + f + s*7)
     print(s + f + s*14 + f + s*4 + f + s*9 + b + s*2 + f + s + f + s*9 + f +
           s*2 + f + s*14 + p + s*2 + f + s*7)
-    print(f + s*11 +  d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 + f
+    print(f + s*11 + d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 + f
           + s*15 + p + s + f + (r*4)[1:])
     print("")
     print("ping-me works well with time and date flags already. "

@@ -5,6 +5,7 @@ import hashlib
 import re
 import sys
 
+
 def newuser():
     EMAIL_REGEX = re.compile(r"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
 
@@ -22,7 +23,7 @@ def newuser():
         sys.stderr.write("Password match failed. Try again.\n")
         password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
         repass = hashlib.md5(getpass.getpass("Re-enter : " +
-            "").rstrip()).hexdigest()
+                                             "").rstrip()).hexdigest()
 
     # To create a file (Better hack?)
     f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'w+')
@@ -33,7 +34,5 @@ def newuser():
     config_file.write('[password]\n\t' + password + '\n')
 
 
-
 def olduser():
     pass
-

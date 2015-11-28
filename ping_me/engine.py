@@ -27,4 +27,3 @@ def engine(message, year, month, day, hour=0, minute=0):
         ping_me.authenticate.newuser()
     else:
         ping_me.authenticate.olduser()
-
