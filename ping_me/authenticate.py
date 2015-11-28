@@ -9,6 +9,24 @@ import sys
 import phonenumbers
 
 
+def extract_password():
+    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
+    password = ""
+    next_one = False  # If true then the next line contains our result
+    for line in f.readlines():
+        if next_one == True:
+            password = line.lstrip().rstrip()
+            break
+        elif line == "[password]\n":
+            next_one = True
+    f.close()
+    if password == "":
+        sys.stderr.write("'$HOME/.pingmeconfig' file seems to be broken.")
+        sys.exit(2)
+    else:
+        return password
+
+
 def newuser():
     EMAIL_REGEX = re.compile(r"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
 
@@ -29,7 +47,7 @@ def newuser():
                                              "").rstrip()).hexdigest()
 
     code_to_country = {}
-    with open("ping_me/data/countrylist.csv") as csvfile:
+    with open("data/countrylist.csv") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
@@ -53,11 +71,7 @@ def newuser():
     countery_name = code_to_country['+' + country_code]
 
 
-    # To create a file (Better hack?)
-    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'w+')
-    f.close()
-
-    config_file = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r+')
+    config_file = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'w+')
     config_file.write('[email]\n\t' + email + '\n')
     config_file.write('[password]\n\t' + password + '\n')
     config_file.write('[phone]\n\t' + country_code + ' ' + number + ' ' +

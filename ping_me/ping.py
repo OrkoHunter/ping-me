@@ -4,6 +4,9 @@ from __future__ import print_function
 import calendar
 import datetime
 import getopt
+import getpass
+import hashlib
+import os
 import sys
 
 import ping_me
@@ -77,6 +80,8 @@ def main():
         # Nothing is given, just a plain string.
         if message == []:
             usage()
+        elif message == ["config"] or message == ["reconfig"]:
+            reconfig()
         else:
             # ~~print("pint-me ain't that smart now. Use the flags instead.")~~
             # time to be smart
@@ -240,9 +245,12 @@ def _is_a_date(date):
 def usage():
     print("Usage : ping-me "
           + "[-d date] [-t time] "
-          + "message")
+          + "<command> <message>")
     print("")
-    print("'ping-me -h' brings up this text. Use 'ping-me -e to see detailed "
+    print("Commands : ")
+    print("\tconfig\tConfigure or reconfigure your personal information "
+          + "and preferences")
+    print("\n'ping-me -h' brings up this text. Use 'ping-me -e to see detailed "
           + "usage with examples.")
 
 
@@ -278,6 +286,19 @@ def detailed_usage():
     print("Report (and track process on fixing) bugs on "
           + "https://github.com/OrkoHunter/ping-me. Or simply write a mail "
           + "to Himanshu Mishra at himanshumishra[at]iitkgp[dot]ac[dot]in")
+
+
+def reconfig():
+    if not os.path.exists("/home/" + getpass.getuser() + "/.pingmeconfig"):
+        ping_me.authenticate.newuser()
+    else:
+        old_pass = hashlib.md5(getpass.getpass("Old Password : " +
+                                               "").rstrip()).hexdigest()
+        if old_pass == ping_me.authenticate.extract_password():
+            ping_me.authenticate.newuser()
+        else:
+            print("Wrong password.")
+            sys.exit(2)
 
 if __name__ == "__main__":
 
