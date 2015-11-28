@@ -8,6 +8,7 @@ import re
 import sys
 
 import phonenumbers
+import ping_me
 
 home = os.path.expanduser("~")
 
@@ -66,6 +67,16 @@ def extract_phone():
         return tuple(phone)  # A tuple of country code, phone number and name
 
 
+def check_saved_password():
+    f = open(home + '/.pingmeconfig', 'r')
+    next_one = False
+    for line in f.readlines():
+        if next_one == True:
+            return True if "YES" in line.split() else False
+        if line == "[preference]\n":
+            next_one = True
+
+
 def newuser():
     EMAIL_REGEX = re.compile(r"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
 
@@ -86,10 +97,14 @@ def newuser():
                                              "").rstrip()).hexdigest()
 
     code_to_country = {}
-    with open("data/countrylist.csv") as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
+    # Location of the csv file is ambiguous
+    try:
+        csvfile = open("data/countrylist.csv")
+    except:
+        csvfile = open("ping_me/data/countrylist.csv")
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
 
     while(True):
         try:
@@ -109,14 +124,39 @@ def newuser():
     country_code = str(read_number.country_code)
     countery_name = code_to_country['+' + country_code]
 
+    save_password = 'NO'
+    sys.stdout.write("Prompt for password ? (Y/n) : ")
+    opt = sys.stdin.read(1)
+    if opt == 'n':
+        save_password = 'YES'
 
     config_file = open(home + '/.pingmeconfig', 'w+')
     config_file.write('[email]\n\t' + email + '\n')
     config_file.write('[password]\n\t' + password + '\n')
     config_file.write('[phone]\n\t' + country_code + ' ' + number + ' ' +
                       countery_name + '\n')
+    config_file.write("[preference]\n\t" + "SAVE_PASSWORD = " + save_password\
+                      + "\n")
     config_file.close()
 
 
 def olduser():
-    pass
+    password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
+    if password == ping_me.authenticate.extract_password():
+        if not check_saved_password():
+            sys.stdout.write("Do you want to save this password? (y/N) : ")
+            opt = sys.stdin.read(1)
+            if opt == 'y':
+                f = open(home + '/.pingmeconfig', 'r')
+                oldlines = f.readlines()
+                f.close()
+                f = open(home + '/.pingmeconfig', 'w')
+                for line in oldline:
+                    if line == "\tSAVE_PASSWORD = NO\n":
+                        f.write("\tSAVE_PASSWORD = YES\n")
+                    else:
+                        f.write(line)
+                f.close()
+    else:
+        sys.stderr.write("Authentication failed.\n")
+        sys.exit(2)
