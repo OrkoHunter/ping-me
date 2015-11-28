@@ -20,6 +20,7 @@ if __name__ == "__main__":
         description = 'Cross platform personalized ping',
         long_description = open('README.md').read(),
         packages = ['ping_me', 'ping_me.depends'],
+        data_files = [('ping_me/data', ['ping_me/data/countrylist.csv'])],
         license = 'Apache License',
         entry_points = {
             'console_scripts': [

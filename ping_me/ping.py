@@ -4,6 +4,9 @@ from __future__ import print_function
 import calendar
 import datetime
 import getopt
+import getpass
+import hashlib
+import os
 import sys
 
 import ping_me
@@ -13,7 +16,8 @@ month_key = dict((v, k) for k, v in
                  enumerate(list(calendar.month_abbr)[1:], 1))
 weekdays_list = [i[:3].lower() for i in list(calendar.day_name)]
 week_key = dict((v, k) for k, v in
-                 enumerate(weekdays_list, 1))
+                enumerate(weekdays_list, 1))
+
 
 def main():
     try:
@@ -70,12 +74,14 @@ def main():
                 print("Unknown format for date: " + month)
                 usage()
                 sys.exit(2)
-        ping_me.engine(message, year=year, month=month,
+        ping_me.engine.engine(message, year=year, month=month,
                        day=day, hour=hour, minute=minute)
     else:
         # Nothing is given, just a plain string.
         if message == []:
             usage()
+        elif message == ["config"] or message == ["reconfig"]:
+            reconfig()
         else:
             # ~~print("pint-me ain't that smart now. Use the flags instead.")~~
             # time to be smart
@@ -152,8 +158,9 @@ def main():
                         _weekday = message[_on_indices[i] + 1]
                         _weekday = week_key[_weekday[:3]]
                         _del_weekday = _weekday - today.isoweekday()
-                        _del_weekday += 7 if _del_weekday<=0 else 0
-                        _next_day = today + datetime.timedelta(days=_del_weekday)
+                        _del_weekday += 7 if _del_weekday <= 0 else 0
+                        _next_day = today + \
+                            datetime.timedelta(days=_del_weekday)
                         day = _next_day.day
                         month = _next_day.month
                         year = _next_day.year
@@ -194,11 +201,11 @@ def main():
 
             if 'to' in message:
                 message.remove('to')
-            if message[0]=='this':
+            if message[0] == 'this':
                 message.pop(0)
-            elif message[-1]=='this':
+            elif message[-1] == 'this':
                 message.pop()
-            ping_me.engine(message, year=year, month=month,
+            ping_me.engine.engine(message, year=year, month=month,
                            day=day, hour=hour, minute=minute)
 
 
@@ -214,6 +221,7 @@ def _is_a_weekday(day):
             return True
         else:
             return False
+
 
 def _is_a_date(date):
     for i in date.split('-'):  # e.g. November-25-2015
@@ -234,13 +242,15 @@ def _is_a_date(date):
     return True
 
 
-
 def usage():
     print("Usage : ping-me "
           + "[-d date] [-t time] "
-          + "message")
+          + "<command> <message>")
     print("")
-    print("'ping-me -h' brings up this text. Use 'ping-me -e to see detailed "
+    print("Commands : ")
+    print("\tconfig\tConfigure or reconfigure your personal information "
+          + "and preferences")
+    print("\n'ping-me -h' brings up this text. Use 'ping-me -e to see detailed "
           + "usage with examples.")
 
 
@@ -260,7 +270,7 @@ def detailed_usage():
           s*2 + f + s*7 + b + f + s*4 + p + s*3 + f + s*7)
     print(s + f + s*14 + f + s*4 + f + s*9 + b + s*2 + f + s + f + s*9 + f +
           s*2 + f + s*14 + p + s*2 + f + s*7)
-    print(f + s*11 +  d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 + f
+    print(f + s*11 + d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 + f
           + s*15 + p + s + f + (r*4)[1:])
     print("")
     print("ping-me works well with time and date flags already. "
@@ -276,6 +286,19 @@ def detailed_usage():
     print("Report (and track process on fixing) bugs on "
           + "https://github.com/OrkoHunter/ping-me. Or simply write a mail "
           + "to Himanshu Mishra at himanshumishra[at]iitkgp[dot]ac[dot]in")
+
+
+def reconfig():
+    if not os.path.exists("/home/" + getpass.getuser() + "/.pingmeconfig"):
+        ping_me.authenticate.newuser()
+    else:
+        old_pass = hashlib.md5(getpass.getpass("Old Password : " +
+                                               "").rstrip()).hexdigest()
+        if old_pass == ping_me.authenticate.extract_password():
+            ping_me.authenticate.newuser()
+        else:
+            print("Wrong password.")
+            sys.exit(2)
 
 if __name__ == "__main__":
 
