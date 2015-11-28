@@ -23,7 +23,7 @@ def newuser():
         sys.stderr.write("Password match failed. Try again.\n")
         password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
         repass = hashlib.md5(getpass.getpass("Re-enter : " +
-                                             "").rstrip()).hexdigest()
+                             "").rstrip()).hexdigest()
 
     # To create a file (Better hack?)
     f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'w+')
