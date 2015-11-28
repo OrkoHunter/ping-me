@@ -7,6 +7,7 @@ import os
 import ping_me
 
 today = datetime.date.today()
+home = os.path.expanduser("~")
 
 
 def engine(message, year, month, day, hour=0, minute=0):
@@ -23,7 +24,7 @@ def engine(message, year, month, day, hour=0, minute=0):
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
 
-    if not os.path.exists('/home/' + getpass.getuser() + '/.pingmeconfig'):
+    if not os.path.exists(home + '/.pingmeconfig'):
         ping_me.authenticate.newuser()
     else:
         ping_me.authenticate.olduser()
