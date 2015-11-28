@@ -9,6 +9,24 @@ import sys
 import phonenumbers
 
 
+def extract_email():
+    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
+    email = ""
+    next_one = False  # If true then the next line contains our result
+    for line in f.readlines():
+        if next_one == True:
+            email = line.lstrip().rstrip()
+            break
+        elif line == "[email]\n":
+            next_one = True
+    f.close()
+    if email == "":
+        sys.stderr.write("'$HOME/.pingmeconfig' file seems to be broken.")
+        sys.exit(2)
+    else:
+        return email
+
+
 def extract_password():
     f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
     password = ""
@@ -25,6 +43,24 @@ def extract_password():
         sys.exit(2)
     else:
         return password
+
+
+def extract_phone():
+    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
+    phone = ""
+    next_one = False  # If true then the next line contains our result
+    for line in f.readlines():
+        if next_one == True:
+            phone = line.split()
+            break
+        elif line == "[phone]\n":
+            next_one = True
+    f.close()
+    if phone == "":
+        sys.stderr.write("'$HOME/.pingmeconfig' file seems to be broken.")
+        sys.exit(2)
+    else:
+        return tuple(phone)  # A tuple of country code, phone number and name
 
 
 def newuser():
