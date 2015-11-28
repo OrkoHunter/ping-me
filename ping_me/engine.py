@@ -1,6 +1,10 @@
 """The engine module of ping-me"""
 from __future__ import print_function
 import datetime
+import getpass
+import os
+
+import ping_me
 
 today = datetime.date.today()
 
@@ -18,3 +22,8 @@ def engine(message, year, month, day, hour=0, minute=0):
     d = datetime.datetime(year, month, day, hour, minute)
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
+
+    if not os.path.exists('/home/' + getpass.getuser() + '/.pingmeconfig'):
+        ping_me.authenticate.newuser()
+    else:
+        ping_me.authenticate.olduser()
