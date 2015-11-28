@@ -297,7 +297,7 @@ def reconfig():
         if old_pass == ping_me.authenticate.extract_password():
             ping_me.authenticate.newuser()
         else:
-            print("Wrong password.")
+            print("Authentication failed.")
             sys.exit(2)
 
 if __name__ == "__main__":
