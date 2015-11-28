@@ -19,12 +19,13 @@ def engine(message, year, month, day, hour=0, minute=0):
     if day == 'none':
         day = today.day
 
+    if not os.path.exists(home + '/.pingmeconfig'):
+        ping_me.authenticate.newuser()
+    else:
+        if not ping_me.authenticate.check_saved_password():
+            ping_me.authenticate.olduser()
+
     print("I have got this message :", ' '.join(message).title())
     d = datetime.datetime(year, month, day, hour, minute)
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
-
-    if not os.path.exists(home + '/.pingmeconfig'):
-        ping_me.authenticate.newuser()
-    else:
-        ping_me.authenticate.olduser()
