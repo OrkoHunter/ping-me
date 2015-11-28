@@ -143,20 +143,19 @@ def newuser():
 def olduser():
     password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
     if password == ping_me.authenticate.extract_password():
-        if not check_saved_password():
-            sys.stdout.write("Do you want to save this password? (y/N) : ")
-            opt = sys.stdin.read(1)
-            if opt == 'y':
-                f = open(home + '/.pingmeconfig', 'r')
-                oldlines = f.readlines()
-                f.close()
-                f = open(home + '/.pingmeconfig', 'w')
-                for line in oldline:
-                    if line == "\tSAVE_PASSWORD = NO\n":
-                        f.write("\tSAVE_PASSWORD = YES\n")
-                    else:
-                        f.write(line)
-                f.close()
+        sys.stdout.write("Do you want to save this password? (y/N) : ")
+        opt = sys.stdin.read(1)
+        if opt == 'y':
+            f = open(home + '/.pingmeconfig', 'r')
+            oldlines = f.readlines()
+            f.close()
+            f = open(home + '/.pingmeconfig', 'w')
+            for line in oldlines:
+                if line == "\tSAVE_PASSWORD = NO\n":
+                    f.write("\tSAVE_PASSWORD = YES\n")
+                else:
+                    f.write(line)
+            f.close()
     else:
         sys.stderr.write("Authentication failed.\n")
         sys.exit(2)
