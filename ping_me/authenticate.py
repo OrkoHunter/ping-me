@@ -3,14 +3,17 @@
 import csv
 import getpass
 import hashlib
+import os
 import re
 import sys
 
 import phonenumbers
 
+home = os.path.expanduser("~")
+
 
 def extract_email():
-    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
+    f = open(home + '/.pingmeconfig', 'r')
     email = ""
     next_one = False  # If true then the next line contains our result
     for line in f.readlines():
@@ -28,7 +31,7 @@ def extract_email():
 
 
 def extract_password():
-    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
+    f = open(home + '/.pingmeconfig', 'r')
     password = ""
     next_one = False  # If true then the next line contains our result
     for line in f.readlines():
@@ -46,7 +49,7 @@ def extract_password():
 
 
 def extract_phone():
-    f = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'r')
+    f = open(home + '/.pingmeconfig', 'r')
     phone = ""
     next_one = False  # If true then the next line contains our result
     for line in f.readlines():
@@ -107,7 +110,7 @@ def newuser():
     countery_name = code_to_country['+' + country_code]
 
 
-    config_file = open('/home/' + getpass.getuser() + '/.pingmeconfig', 'w+')
+    config_file = open(home + '/.pingmeconfig', 'w+')
     config_file.write('[email]\n\t' + email + '\n')
     config_file.write('[password]\n\t' + password + '\n')
     config_file.write('[phone]\n\t' + country_code + ' ' + number + ' ' +

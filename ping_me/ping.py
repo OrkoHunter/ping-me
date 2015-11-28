@@ -17,7 +17,7 @@ month_key = dict((v, k) for k, v in
 weekdays_list = [i[:3].lower() for i in list(calendar.day_name)]
 week_key = dict((v, k) for k, v in
                 enumerate(weekdays_list, 1))
-
+home = os.path.expanduser("~")
 
 def main():
     try:
@@ -289,7 +289,7 @@ def detailed_usage():
 
 
 def reconfig():
-    if not os.path.exists("/home/" + getpass.getuser() + "/.pingmeconfig"):
+    if not os.path.exists(home + "/.pingmeconfig"):
         ping_me.authenticate.newuser()
     else:
         old_pass = hashlib.md5(getpass.getpass("Old Password : " +
