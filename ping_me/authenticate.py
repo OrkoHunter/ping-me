@@ -9,6 +9,7 @@ import sys
 
 import phonenumbers
 import ping_me
+from ping_me.data import module_locator
 
 home = os.path.expanduser("~")
 
@@ -98,10 +99,8 @@ def newuser():
 
     code_to_country = {}
     # Location of the csv file is ambiguous
-    try:
-        csvfile = open("data/countrylist.csv")
-    except:
-        csvfile = open("ping_me/data/countrylist.csv")
+    csv_path = module_locator.modeule_path()
+    csvfile = open(csv_path + "/countrylist.csv")
     reader = csv.DictReader(csvfile)
     for row in reader:
         code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
