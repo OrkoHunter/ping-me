@@ -105,23 +105,29 @@ def newuser():
     for row in reader:
         code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
 
-    while(True):
-        try:
-            sys.stdout.write("Phone number : ")
-            read_number = sys.stdin.readline()
-            read_number = phonenumbers.parse(read_number, "IN")
-            while(not phonenumbers.is_valid_number(read_number)):
-                sys.stderr.write("Phone number is invalid. Try again.\n")
+    sys.stdout.write("Do you want to recieve text reminders? (N/y) : ")
+    if sys.stdin.read(1) == 'y':
+        while(True):
+            try:
                 sys.stdout.write("Phone number : ")
                 read_number = sys.stdin.readline()
                 read_number = phonenumbers.parse(read_number, "IN")
-            break
-        except Exception as e:
-            print(e)
+                while(not phonenumbers.is_valid_number(read_number)):
+                    sys.stderr.write("Phone number is invalid. Try again.\n")
+                    sys.stdout.write("Phone number : ")
+                    read_number = sys.stdin.readline()
+                    read_number = phonenumbers.parse(read_number, "IN")
+                break
+            except Exception as e:
+                print(e)
 
-    number = str(read_number.national_number).rstrip()
-    country_code = str(read_number.country_code)
-    countery_name = code_to_country['+' + country_code]
+        number = str(read_number.national_number).rstrip()
+        country_code = str(read_number.country_code)
+        country_name = code_to_country['+' + country_code]
+    else:
+        number = '0000000000'
+        country_code = '00'
+        country_name = 'XX'
 
     save_password = 'NO'
     sys.stdout.write("Prompt for password ? (Y/n) : ")
@@ -133,7 +139,7 @@ def newuser():
     config_file.write('[email]\n\t' + email + '\n')
     config_file.write('[password]\n\t' + password + '\n')
     config_file.write('[phone]\n\t' + country_code + ' ' + number + ' ' +
-                      countery_name + '\n')
+                      country_name + '\n')
     config_file.write("[preference]\n\t" + "SAVE_PASSWORD = " + save_password\
                       + "\n")
     config_file.close()
