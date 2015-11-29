@@ -74,7 +74,7 @@ def main():
                 print("Unknown format for date: " + month)
                 usage()
                 sys.exit(2)
-        ping_me.engine.engine(message.lower(), year=year, month=month,
+        ping_me.engine.engine(message, year=year, month=month,
                        day=day, hour=hour, minute=minute)
     else:
         # Nothing is given, just a plain string.
@@ -205,7 +205,7 @@ def main():
                 message.pop(0)
             elif message[-1] == 'this':
                 message.pop()
-            ping_me.engine.engine(message.lower(), year=year, month=month,
+            ping_me.engine.engine(message, year=year, month=month,
                            day=day, hour=hour, minute=minute)
 
 
