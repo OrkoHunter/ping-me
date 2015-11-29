@@ -129,11 +129,11 @@ def newuser():
         country_code = '00'
         country_name = 'XX'
 
-    save_password = 'NO'
-    sys.stdout.write("Prompt for password ? (Y/n) : ")
+    save_password = 'YES'
+    sys.stdout.write("Prompt for password ? (y/N) : ")
     opt = sys.stdin.read(1)
-    if opt == 'n':
-        save_password = 'YES'
+    if opt == 'y':
+        save_password = 'NO'
 
     config_file = open(home + '/.pingmeconfig', 'w+')
     config_file.write('[email]\n\t' + email + '\n')
