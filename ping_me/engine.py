@@ -25,7 +25,7 @@ def engine(message, year, month, day, hour=0, minute=0):
         if not ping_me.authenticate.check_saved_password():
             ping_me.authenticate.olduser()
 
-    print("I have got this message :", ' '.join(message).title())
+    print("I have got this message :", ' '.join(message).lower())
     d = datetime.datetime(year, month, day, hour, minute)
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
