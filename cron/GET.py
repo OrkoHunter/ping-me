@@ -17,10 +17,11 @@ hashed_email = hashlib.md5(email).hexdigest()
 del email
 data = urllib2.urlopen(target)
 
-
+found = False
 for line in data:
     line = line.split()
     if line[0] == hashed_email:
+        found = True
         for i in range(1, len(line)):
             line[i] = int(line[i])
         message = tunnelcrypt.decrypt(line[1:], password)
@@ -31,6 +32,26 @@ for line in data:
         elif sys.platform in ['win32', 'win64']:
             # Do things for windows
             pass
+
+# If not found in the country's name, search in XXXX.txt
+if not found:
+    target = 'http://www.himanshumishra.in/pingme/cron/XXXX.txt'
+    data = urllib2.urlopen(target)
+    for line in data:
+        line = line.split()
+        if line[0] == hashed_email:
+            found = True
+            for i in range(1, len(line)):
+                line[i] = int(line[i])
+            message = tunnelcrypt.decrypt(line[1:], password)
+            if sys.platform == 'linux2':
+                subprocess.call(['notify-send', message])
+            elif sys.platform == 'darwin':
+                subprocess.call(['terminal-notifier', '-title', message])
+            elif sys.platform in ['win32', 'win64']:
+                # Do things for windows
+                pass
+
 
 del target
 del data
