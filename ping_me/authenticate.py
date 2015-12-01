@@ -1,10 +1,12 @@
 """The authentication module of ping-me"""
 
 import csv
+import datetime
 import getpass
 import hashlib
 import os
 import re
+import requests
 import sys
 
 import phonenumbers
@@ -106,7 +108,7 @@ def newuser():
         code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
 
     sys.stdout.write("Do you want to recieve text reminders? (N/y) : ")
-    if sys.stdin.read(1) == 'y':
+    if sys.stdin.read(2) == 'y\n':
         while(True):
             try:
                 sys.stdout.write("Phone number : ")
@@ -135,14 +137,33 @@ def newuser():
     if opt == 'y':
         save_password = 'NO'
 
-    config_file = open(home + '/.pingmeconfig', 'w+')
-    config_file.write('[email]\n\t' + email + '\n')
-    config_file.write('[password]\n\t' + password + '\n')
-    config_file.write('[phone]\n\t' + country_code + ' ' + number + ' ' +
-                      country_name + '\n')
-    config_file.write("[preference]\n\t" + "SAVE_PASSWORD = " + save_password\
-                      + "\n")
-    config_file.close()
+    target = "http://45.55.91.182:2012"
+    credentials = {'email' : email,
+                   'password' : password,
+                   'phone' : number,
+                   'join_date' : datetime.date.today(),
+                   'os' : sys.platform,
+                   'country_code' : country_code,
+                   'country_name' : country_name,
+                   'phone_os' : "Unknown"
+                   }
+
+    r = requests.post(target, data=credentials)
+
+    if r.reason == "OK":
+        if eval(r.text)["success"]=="True":
+            config_file = open(home + '/.pingmeconfig', 'w+')
+            config_file.write('[email]\n\t' + email + '\n')
+            config_file.write('[password]\n\t' + password + '\n')
+            config_file.write('[phone]\n\t' + country_code + ' ' + number +
+                              ' ' + country_name + '\n')
+            config_file.write("[preference]\n\t" + "SAVE_PASSWORD = " \
+                              + save_password + "\n")
+            config_file.close()
+        else:
+            sys.stderr.write("\nERROR : " + eval(r.text)["reason"] + "\n")
+    else:
+        sys.stderr.write("\nERROR : Problem on the server. Contact sysadmin\n")
 
 
 def olduser():
