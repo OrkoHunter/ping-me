@@ -11,6 +11,24 @@ Stay Lazy, Stay Updated !
 
 ![alt text](bin/ping-me-e.png "ping-me -e")
 
+## Project Status
+ - [X] `ping-me` identifies date, time and message using flags
+ - [X] `ping-me` asks for configuration on first request
+ - [X] `ping-me` stores the configuration on remote server
+ - [X] `ping-me` stores the message with datetime stamp on the server
+ - [X] Server activates the ping 50 seconds prior to its exact time
+ - [X] Server ready for a GET request
+ - [ ] `ping-me` makes full use of natural language processing
+ - [ ] `ping-me` notifies through chrome/firefox extension
+ - [ ] `ping-me` works on linux
+ - [ ] `ping-me` works on windows
+ - [ ] `ping-me` works on OS X
+ - [ ] `ping-me` works on Android
+ - [ ] `ping-me` sends texts to phone
+ - [ ] `ping-me` ping-me works on ios
+ - [ ] `ping-me` works on Windows phone
+
+
 ## Installation
 
 ### From GitHub
