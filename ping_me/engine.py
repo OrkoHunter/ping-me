@@ -5,8 +5,8 @@ import getpass
 import os
 import requests
 
-import authenticate
-import ping_me
+from ping_me import authenticate
+from ping_me import cryptex
 
 today = datetime.date.today()
 home = os.path.expanduser("~")
@@ -22,10 +22,10 @@ def engine(message, year, month, day, hour=0, minute=0):
         day = today.day
 
     if not os.path.exists(home + '/.pingmeconfig'):
-        ping_me.authenticate.newuser()
+        authenticate.newuser()
     else:
-        if not ping_me.authenticate.check_saved_password():
-            ping_me.authenticate.olduser()
+        if not authenticate.check_saved_password():
+            authenticate.olduser()
 
     message = ' '.join(message).lower()
     print("I have got this message :", message)
@@ -33,10 +33,13 @@ def engine(message, year, month, day, hour=0, minute=0):
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
 
+    extra = (len(message) - len(message)%16)*' '
+    crypto_message = message + extra
+    cryptex.encryptor(authenticate.extract_password(), crypto_message)
     target = "http://45.55.91.182:2012/message/"
     credentials = {'email' : authenticate.extract_email(),
                    'ping_datetime' : d.strftime("%Y-%m-%d %H:%M:00"),
-                   'message' : message
+                   'message' : crypto_message
                    }
 
     r = requests.post(target, data=credentials)
