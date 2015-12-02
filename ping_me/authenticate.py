@@ -141,7 +141,7 @@ def newuser():
     if opt.strip() == 'y': # New line character
         save_password = 'NO'
 
-    target = "http://45.55.91.182:2012"
+    target = "http://45.55.91.182:2012/config/"
     credentials = {'email' : email,
                    'password' : password,
                    'phone' : number,
