@@ -5,7 +5,7 @@ import ping_me
 import hashlib
 import sys
 import subprocess
-import tunnelcrypt
+import cryptex
 
 country = ping_me.authenticate.extract_phone()[2]
 filename = country[:2] + country[-2:]
@@ -24,7 +24,7 @@ for line in data:
         found = True
         for i in range(1, len(line)):
             line[i] = int(line[i])
-        message = tunnelcrypt.decrypt(line[1:], password)
+        message = cryptex.decryptor(password, line[1:])
         if sys.platform == 'linux2':
             subprocess.call(['notify-send', message])
         elif sys.platform == 'darwin':
@@ -43,7 +43,7 @@ if not found:
             found = True
             for i in range(1, len(line)):
                 line[i] = int(line[i])
-            message = tunnelcrypt.decrypt(line[1:], password)
+            message = cryptex.decryptor(password, line[1:])
             if sys.platform == 'linux2':
                 subprocess.call(['notify-send', message])
             elif sys.platform == 'darwin':
@@ -56,4 +56,3 @@ if not found:
 del target
 del data
 del hashed_email
-
