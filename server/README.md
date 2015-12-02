@@ -12,3 +12,4 @@
 
 	Both are received, processed and then the database is changed accordingly.
 
+     * **`put.py`** : Scrapes message from database if the next ping is within 60 seconds.
