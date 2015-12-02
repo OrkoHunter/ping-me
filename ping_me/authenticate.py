@@ -108,7 +108,8 @@ def newuser():
         code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
 
     sys.stdout.write("Do you want to recieve text reminders? (N/y) : ")
-    if sys.stdin.read(2) == 'y\n':
+    opt = sys.stdin.readline()
+    if opt.strip() == 'y':  # \n character
         while(True):
             try:
                 sys.stdout.write("Phone number : ")
@@ -133,8 +134,8 @@ def newuser():
 
     save_password = 'YES'
     sys.stdout.write("Prompt for password ? (y/N) : ")
-    opt = sys.stdin.read(1)
-    if opt == 'y':
+    opt = sys.stdin.readline()
+    if opt.strip() == 'y': # New line character
         save_password = 'NO'
 
     target = "http://45.55.91.182:2012"
