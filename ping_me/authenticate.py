@@ -92,6 +92,9 @@ def newuser():
     email = email.rstrip()  # Remove newline character
 
     password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
+    while(password=="d41d8cd98f00b204e9800998ecf8427e"):  # NULL
+        sys.stderr.write("Invalid password. Try Again.\n")
+        password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
     repass = hashlib.md5(getpass.getpass("Re-enter : ").rstrip()).hexdigest()
     while(password != repass):
         sys.stderr.write("Password match failed. Try again.\n")
