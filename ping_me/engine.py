@@ -1,12 +1,14 @@
 """The engine module of ping-me"""
+from __future__ import absolute_import
 from __future__ import print_function
+from __future__ import division
 import datetime
 import getpass
 import os
 import requests
 
 from ping_me import authenticate
-from ping_me import cryptex
+from ping_me.utils import cryptex
 
 today = datetime.date.today()
 home = os.path.expanduser("~")
@@ -33,9 +35,10 @@ def engine(message, year, month, day, hour=0, minute=0):
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
 
-    extra = (len(message) - len(message)%16)*' '
+    extra = ' '*(16*(len(message)//16 + 1) - len(message))
     crypto_message = message + extra
-    cryptex.encryptor(authenticate.extract_password(), crypto_message)
+    crypto_message = cryptex.encryptor(authenticate.extract_password(),
+                                       crypto_message)
     target = "http://45.55.91.182:2012/message/"
     credentials = {'email' : authenticate.extract_email(),
                    'ping_datetime' : d.strftime("%Y-%m-%d %H:%M:00"),
@@ -43,4 +46,4 @@ def engine(message, year, month, day, hour=0, minute=0):
                    }
 
     r = requests.post(target, data=credentials)
-    print(r.reason)
+    print(r.status_code, r.reason)

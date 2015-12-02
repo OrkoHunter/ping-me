@@ -5,7 +5,8 @@ import ping_me
 import hashlib
 import sys
 import subprocess
-import cryptex
+from ping_me.utils import cryptex
+
 
 country = ping_me.authenticate.extract_phone()[2]
 filename = country[:2] + country[-2:]
