@@ -34,6 +34,7 @@ def engine(message, year, month, day, hour=0, minute=0):
     d = datetime.datetime(year, month, day, hour, minute)
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
+    d = d - datetime.timedelta(hours=10.5)  # Convert into NYC timezone
 
     extra = ' '*(16*(len(message)//16 + 1) - len(message))
     crypto_message = message + extra
