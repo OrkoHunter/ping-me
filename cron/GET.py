@@ -23,9 +23,7 @@ for line in data:
     line = line.split()
     if line[0] == hashed_email:
         found = True
-        for i in range(1, len(line)):
-            line[i] = int(line[i])
-        message = cryptex.decryptor(password, line[1:])
+        message = cryptex.decryptor(password, line[1])
         if sys.platform == 'linux2':
             subprocess.call(['notify-send', message])
         elif sys.platform == 'darwin':
@@ -42,9 +40,7 @@ if not found:
         line = line.split()
         if line[0] == hashed_email:
             found = True
-            for i in range(1, len(line)):
-                line[i] = int(line[i])
-            message = cryptex.decryptor(password, line[1:])
+            message = cryptex.decryptor(password, line[1])
             if sys.platform == 'linux2':
                 subprocess.call(['notify-send', message])
             elif sys.platform == 'darwin':
