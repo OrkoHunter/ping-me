@@ -110,30 +110,23 @@ def newuser():
     for row in reader:
         code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
 
-    sys.stdout.write("Do you want to recieve text reminders? (N/y) : ")
-    opt = sys.stdin.readline()
-    if opt.strip() == 'y':  # \n character
-        while(True):
-            try:
+    while(True):
+        try:
+            sys.stdout.write("Phone number : ")
+            read_number = sys.stdin.readline()
+            read_number = phonenumbers.parse(read_number, "IN")
+            while(not phonenumbers.is_valid_number(read_number)):
+                sys.stderr.write("Phone number is invalid. Try again.\n")
                 sys.stdout.write("Phone number : ")
                 read_number = sys.stdin.readline()
                 read_number = phonenumbers.parse(read_number, "IN")
-                while(not phonenumbers.is_valid_number(read_number)):
-                    sys.stderr.write("Phone number is invalid. Try again.\n")
-                    sys.stdout.write("Phone number : ")
-                    read_number = sys.stdin.readline()
-                    read_number = phonenumbers.parse(read_number, "IN")
-                break
-            except Exception as e:
-                print(e)
+            break
+        except Exception as e:
+            print(e)
 
-        number = str(read_number.national_number).rstrip()
-        country_code = str(read_number.country_code)
-        country_name = code_to_country['+' + country_code]
-    else:
-        number = '0000000000'
-        country_code = '00'
-        country_name = 'XX'
+    number = str(read_number.national_number).rstrip()
+    country_code = str(read_number.country_code)
+    country_name = code_to_country['+' + country_code]
 
     save_password = 'YES'
     sys.stdout.write("Prompt for password ? (y/N) : ")
