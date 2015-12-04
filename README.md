@@ -20,7 +20,7 @@ Stay Lazy, Stay Updated !
  - [X] Server ready for a GET request
  - [ ] `ping-me` makes full use of natural language processing
  - [ ] `ping-me` notifies through chrome/firefox extension
- - [ ] `ping-me` works on linux
+ - [X] `ping-me` works on linux
  - [ ] `ping-me` works on windows
  - [ ] `ping-me` works on OS X
  - [ ] `ping-me` works on Android
