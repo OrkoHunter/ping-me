@@ -16,24 +16,21 @@ home = os.path.expanduser("~")
 
 def engine(message, year, month, day, hour=0, minute=0):
     """Sets the reminder"""
-    if year == 'none':
-        year = today.year
-    if month == 'none':
-        month = today.month
-    if day == 'none':
-        day = today.day
-
     if not os.path.exists(home + '/.pingmeconfig'):
         authenticate.newuser()
     else:
         if not authenticate.check_saved_password():
             authenticate.olduser()
 
-    message = ' '.join(message).lower()
-    print("I have got this message :", message)
     d = datetime.datetime(year, month, day, hour, minute)
+    if d < datetime.datetime.now():
+        sys.stdout.write("Are you sure about being reminded in the past?")
+        sys.exit(2)
+
+    print("I have got this message :", message)
 
     print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
+    # Adjust the number 10.5 accordingly
     d = d - datetime.timedelta(hours=10.5)  # Convert into NYC timezone
 
     extra = ' '*(16*(len(message)//16 + 1) - len(message))
