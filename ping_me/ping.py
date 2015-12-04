@@ -1,25 +1,38 @@
 # -*- coding: utf-8 -*-
 """Command line execution listener module of ping-me"""
 from __future__ import print_function
+from dateutil import parser
+import argparse
 import calendar
 import datetime
-import getopt
 import getpass
 import hashlib
 import os
 import sys
 
 import ping_me
-from ping_me.depends import text2num
 
-month_key = dict((v, k) for k, v in
-                 enumerate(list(calendar.month_abbr)[1:], 1))
-weekdays_list = [i[:3].lower() for i in list(calendar.day_name)]
-week_key = dict((v, k) for k, v in
-                enumerate(weekdays_list, 1))
 home = os.path.expanduser("~")
 
 def main():
+    argparser = argparse.ArgumentParser(description='ping-me')
+
+    argparser.add_argument("-d", "--date", action="store", dest="DATE",
+                           default=None, nargs="+")
+    argparser.add_argument("-t", "--time", action="store", dest="TIME",
+                           default=None, nargs="+")
+    argparser.add_argument("message", action="store", help="Message",
+                           nargs="+")
+
+    args = argparser.parse_args()
+
+    message = ' '.join(args.message).lstrip('to ')
+    date_time = parser.parse(' '.join(args.DATE) + ' '.join(args.TIME))
+
+    ping_me.engine.engine(message, date_time.year, date_time.month,
+                          date_time.day, date_time.hour, date_time.minute)
+
+    '''
     try:
         optlist, message = getopt.getopt(sys.argv[1:], 'd:t:he')
     except Exception as e:
@@ -74,6 +87,7 @@ def main():
                 print("Unknown format for date: " + month)
                 usage()
                 sys.exit(2)
+
         ping_me.engine.engine(message, year=year, month=month,
                        day=day, hour=hour, minute=minute)
     else:
@@ -207,6 +221,7 @@ def main():
                 message.pop()
             ping_me.engine.engine(message, year=year, month=month,
                            day=day, hour=hour, minute=minute)
+    '''
 
 
 def _is_a_weekday(day):

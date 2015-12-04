@@ -16,20 +16,12 @@ home = os.path.expanduser("~")
 
 def engine(message, year, month, day, hour=0, minute=0):
     """Sets the reminder"""
-    if year == 'none':
-        year = today.year
-    if month == 'none':
-        month = today.month
-    if day == 'none':
-        day = today.day
-
     if not os.path.exists(home + '/.pingmeconfig'):
         authenticate.newuser()
     else:
         if not authenticate.check_saved_password():
             authenticate.olduser()
 
-    message = ' '.join(message).lower()
     print("I have got this message :", message)
     d = datetime.datetime(year, month, day, hour, minute)
 
