@@ -6,6 +6,7 @@ import datetime
 import getpass
 import os
 import requests
+import sys
 
 from ping_me import authenticate
 from ping_me.utils import cryptex
@@ -14,7 +15,7 @@ today = datetime.date.today()
 home = os.path.expanduser("~")
 
 
-def engine(message, year, month, day, hour=0, minute=0):
+def engine(message, year, month, day, hour=0, minute=0, v=False):
     """Sets the reminder"""
     if not os.path.exists(home + '/.pingmeconfig'):
         authenticate.newuser()
@@ -24,12 +25,11 @@ def engine(message, year, month, day, hour=0, minute=0):
 
     d = datetime.datetime(year, month, day, hour, minute)
     if d < datetime.datetime.now():
-        sys.stdout.write("Are you sure about being reminded in the past?")
+        sys.stdout.write("Are you sure about being reminded in the past?\n")
         sys.exit(2)
-
-    print("I have got this message :", message)
-
-    print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
+    if v:
+        print("I have got this message :", message)
+        print("I have to ping you on {:%Y-%m-%d %H:%M} hours.".format(d))
     # Adjust the number 10.5 accordingly
     d = d - datetime.timedelta(hours=10.5)  # Convert into NYC timezone
 
