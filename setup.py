@@ -27,7 +27,8 @@ if __name__ == "__main__":
         license = 'Apache License',
         entry_points = {
             'console_scripts': [
-            'ping-me = ping_me.ping:main'
+            'ping-me = ping_me.ping:main',
+            'get-ping = ping_me.GET'
             ]
         },
         test_suite = 'nose.collector',
