@@ -51,6 +51,6 @@ while(True):
                     elif sys.platform in ['win32', 'win64']:
                         # Do things for windows
                         pass
-        time.sleep(5)
+        time.sleep(4)
     except:
-        time.sleep(5)
+        time.sleep(4)
