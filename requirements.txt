@@ -1,4 +1,3 @@
 phonenumbers
 requests
 pycrypto
-urllib2
