@@ -30,7 +30,8 @@ while(True):
                 if sys.platform == 'linux2':
                     subprocess.call(['notify-send', message])
                 elif sys.platform == 'darwin':
-                    subprocess.call(['terminal-notifier', '-title', 'ping-me', 'Ping!'])
+                    subprocess.call(['terminal-notifier', '-title', 'ping-me',
+                                     message])
                 elif sys.platform in ['win32', 'win64']:
                     # Do things for windows
                     pass
