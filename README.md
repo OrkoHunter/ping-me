@@ -1,4 +1,5 @@
 [![pypi version](https://img.shields.io/pypi/v/ping-me.svg)](https://github.com/OrkoHunter/ping-me/tree/v0.2)
+[![Code Health](https://landscape.io/github/OrkoHunter/ping-me/master/landscape.svg?style=flat)](https://landscape.io/github/OrkoHunter/ping-me/master)
 # ping-me
 A Cross Platform personalized Ping
 
