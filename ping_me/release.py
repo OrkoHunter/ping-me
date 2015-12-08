@@ -2,13 +2,13 @@
 
 name = 'ping-me'
 major = '0'
-minor = '1'
+minor = '2.1'
 
 __version__ = major + '.' + minor
 
 __date__ = '2015-12-08'  ## YYYY-MM-DD
 
-__discription__ = 'Cross platform personalized ping'
+__description__ = 'Cross platform personalized ping'
 
 __author__ = 'Himanshu Mishra'
 __email__ = 'himanshu2014iit@gmail.com'
