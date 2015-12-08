@@ -35,6 +35,10 @@ def main():
     if args.e:
         detailed_usage()
         sys.exit(2)
+    if args.version:
+        import release
+        print(release.__version__)
+        sys.exit(2)
 
     if args.DATE != None and args.TIME != None:
         message = ' '.join(args.message).lstrip('to ')
