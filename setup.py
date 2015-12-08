@@ -18,17 +18,14 @@ if __name__ == "__main__":
         author = 'Himanshu Mishra',
         author_email = 'himanshumishra@iitkgp.ac.in',
         description = 'Cross platform personalized ping',
-        long_description = open('README.md').read(),
         packages = ['ping_me',
-                    'ping_me.depends',
                     'ping_me.data',
                     'ping_me.utils'],
-        data_files = [('ping_me/data', ['ping_me/data/countrylist.csv'])],
         license = 'Apache License',
         entry_points = {
             'console_scripts': [
             'ping-me = ping_me.ping:main',
-            'get-ping = ping_me.GET'
+            'get-ping = ping_me.GET:main'
             ]
         },
         test_suite = 'nose.collector',
