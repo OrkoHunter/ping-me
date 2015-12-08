@@ -11,7 +11,7 @@ import sys
 
 import phonenumbers
 import ping_me
-from ping_me.data import module_locator
+from ping_me.data import countrylist
 
 home = os.path.expanduser("~")
 
@@ -102,14 +102,6 @@ def newuser():
         repass = hashlib.md5(getpass.getpass("Re-enter : " +
                                              "").rstrip()).hexdigest()
 
-    code_to_country = {}
-    # Location of the csv file is ambiguous
-    csv_path = module_locator.modeule_path()
-    csvfile = open(csv_path + "/countrylist.csv")
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-        code_to_country[row["ITU-T Telephone Code"]] = row["Common Name"]
-
     while(True):
         try:
             sys.stdout.write("Phone number : ")
@@ -126,7 +118,7 @@ def newuser():
 
     number = str(read_number.national_number).rstrip()
     country_code = str(read_number.country_code)
-    country_name = code_to_country['+' + country_code]
+    country_name = countrylist.code_to_country['+' + country_code]
 
     save_password = 'YES'
     sys.stdout.write("Prompt for password ? (y/N) : ")
