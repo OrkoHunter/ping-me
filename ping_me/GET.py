@@ -13,6 +13,7 @@ import ping_me
 def main():
     while(True):
         # The try/except is for the case when the file might not exist
+        found = False
         try:
             country = ping_me.authenticate.extract_phone()[2]
             filename = country[:2] + country[-2:] + '.txt'
@@ -27,6 +28,7 @@ def main():
                 line = line.split()
                 if line[0] == hashed_email:
                     # ping time!
+                    found = True
                     message = cryptex.decryptor(key, line[1])
                     if sys.platform == 'linux2':
                         subprocess.call(['notify-send', message])
@@ -40,7 +42,7 @@ def main():
             # If not found in the country's name, search in XXXX.txt
             if not found:
                 target = 'http://www.himanshumishra.in/pingme/cron/XXXX.txt'
-                data = urllib.urlopen(target)
+                data = urllib2.urlopen(target)
                 for line in data:
                     line = line.split()
                     if line[0] == hashed_email:
