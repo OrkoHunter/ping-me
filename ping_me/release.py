@@ -2,7 +2,7 @@
 
 name = 'ping-me'
 major = '0'
-minor = '1'
+minor = '2.1'
 
 __version__ = major + '.' + minor
 
