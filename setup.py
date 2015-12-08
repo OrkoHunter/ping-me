@@ -17,7 +17,7 @@ if __name__ == "__main__":
         version = release.__version__,
         author = release.__author__,
         author_email = release.__email__,
-        description = release.__email__,
+        description = release.description,
         url='https://github.com/OrkoHunter/ping-me',
         keywords='ping me reminder cross platform',
         packages = ['ping_me',
