@@ -30,6 +30,7 @@ Stay Lazy, Stay Updated !
  - [ ] `ping-me` ping-me works on ios
  - [ ] `ping-me` works on Windows phone
 
+__Current Release__ - [0.2](https://github.com/OrkoHunter/ping-me/tree/v0.2)
 
 ## Installation
 
