@@ -28,6 +28,8 @@ if __name__ == "__main__":
             'get-ping = ping_me.GET:main'
             ]
         },
+        install_requires = ['phonenumbers', 'requests', 'pycrypto',
+                            'python-dateutil'],
         test_suite = 'nose.collector',
         tests_require = ['nose>=0.10.1']
     )
