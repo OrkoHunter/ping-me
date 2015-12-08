@@ -18,15 +18,23 @@ home = os.path.expanduser("~")
 def main():
     argparser = argparse.ArgumentParser(description='ping-me')
 
+    argparser.add_argument("-e", action="store_true", default=False)
+    argparser.add_argument("-V", "--version", action="store_true",
+                           default=False)
     argparser.add_argument("-d", "--date", action="store", dest="DATE",
                            default=None, nargs="+")
     argparser.add_argument("-t", "--time", action="store", dest="TIME",
                            default=None, nargs="+")
     argparser.add_argument("message", action="store", help="Message",
-                           nargs="+")
+                           default=None, nargs="*")
     argparser.add_argument("-v", action="store_true", default=False)
 
+
     args = argparser.parse_args()
+
+    if args.e:
+        detailed_usage()
+        sys.exit(2)
 
     if args.DATE != None and args.TIME != None:
         message = ' '.join(args.message).lstrip('to ')
@@ -36,7 +44,7 @@ def main():
         ping_me.engine.engine(message, date_time.year, date_time.month,
                               date_time.day, date_time.hour, date_time.minute,
                               args.v)
-    elif args.DATE == None:
+    elif args.TIME != None:
         m_time = parser.parse(' '.join(args.TIME))
         c_time = datetime.datetime.now()
         if (m_time - c_time).days == -1:
@@ -44,18 +52,16 @@ def main():
         message = ' '.join(args.message).lstrip('to ')
         ping_me.engine.engine(message, m_time.year, m_time.month,
                               m_time.day, m_time.hour, m_time.minute, args.v)
-    elif args.TIME == None:
+    elif args.DATE != None:
         c_time = `time.localtime().tm_hour` + ":" + `time.localtime().tm_min`
         m_date = parser.parse(' '.join(args.DATE) + ' ' + c_time)
         message = ' '.join(args.message).lstrip('to ')
         ping_me.engine.engine(message, m_date.year, m_date.month,
                               m_date.day, m_date.hour, m_date.minute, args.v)
     else:
-        if len(message) == 1 and message == ['-e']:
-            detailed_usage()
-        elif len(message) == 1 and message == ['config']:
+        if len(args.message) == 1 and args.message == ['config']:
             ping_me.authenticate.newuser()
-        elif len(message) == 1 and message == ['reconfig']:
+        elif len(args.message) == 1 and args.message == ['reconfig']:
             reconfig()
         else:
             # Process smartly
