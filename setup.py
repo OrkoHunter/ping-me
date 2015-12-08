@@ -8,16 +8,18 @@ if sys.argv[-1] == 'setup.py':
     print('To install, run \'python setup.py install\'')
     print()
 
-NAME = 'ping-me'
-VERSION = '0.1'
+sys.path.insert(0, 'ping_me')
+import release
 
 if __name__ == "__main__":
     setup(
-        name = NAME,
-        version = VERSION,
-        author = 'Himanshu Mishra',
-        author_email = 'himanshumishra@iitkgp.ac.in',
-        description = 'Cross platform personalized ping',
+        name = release.name,
+        version = release.__version__,
+        author = release.__author__,
+        author_email = release.__email__,
+        description = release.__email__,
+        url='https://github.com/OrkoHunter/ping-me',
+        keywords='ping me reminder cross platform',
         packages = ['ping_me',
                     'ping_me.data',
                     'ping_me.utils'],
