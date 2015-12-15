@@ -44,7 +44,10 @@ def main():
         message = ' '.join(args.message).lstrip('to ')
         date_time = parser.parse(' '.join(args.DATE) +
                                  ' ' + ' '.join(args.TIME))
-
+        if len(message) == 0:
+            print("What is the message of your reminder?\n")
+            print("Use ping-me -h for help\n")
+            sys.exit(2)
         ping_me.engine.engine(message, date_time.year, date_time.month,
                               date_time.day, date_time.hour, date_time.minute,
                               args.v)
@@ -54,12 +57,20 @@ def main():
         if (m_time - c_time).days == -1:
             m_time += datetime.timedelta(1)
         message = ' '.join(args.message).lstrip('to ')
+        if len(message) == 0:
+            print("What is the message of your reminder?\n")
+            print("Use ping-me -h for help\n")
+            sys.exit(2)
         ping_me.engine.engine(message, m_time.year, m_time.month,
                               m_time.day, m_time.hour, m_time.minute, args.v)
     elif args.DATE != None:
         c_time = `time.localtime().tm_hour` + ":" + `time.localtime().tm_min`
         m_date = parser.parse(' '.join(args.DATE) + ' ' + c_time)
         message = ' '.join(args.message).lstrip('to ')
+        if len(message) == 0:
+            print("What is the message of your reminder?\n")
+            print("Use ping-me -h for help\n")
+            sys.exit(2)
         ping_me.engine.engine(message, m_date.year, m_date.month,
                               m_date.day, m_date.hour, m_date.minute, args.v)
     else:
