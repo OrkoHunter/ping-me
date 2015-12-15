@@ -63,7 +63,10 @@ def main():
         ping_me.engine.engine(message, m_date.year, m_date.month,
                               m_date.day, m_date.hour, m_date.minute, args.v)
     else:
-        if len(args.message) == 1 and args.message == ['config']:
+        if len(args.message) == 0:
+            sys.stderr.write("Use ping-me -h for help\n")
+            sys.exit(2)
+        elif len(args.message) == 1 and args.message == ['config']:
             ping_me.authenticate.newuser()
         elif len(args.message) == 1 and args.message == ['reconfig']:
             reconfig()
