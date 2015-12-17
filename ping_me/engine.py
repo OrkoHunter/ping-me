@@ -43,7 +43,7 @@ def engine(message, year, month, day, hour=0, minute=0, v=False):
     crypto_message = message + extra
     crypto_message = cryptex.encryptor(authenticate.extract_password(),
                                        crypto_message)
-    target = "http://45.55.91.182:2012/message/"
+    target = "http://ping-me.himanshumishra.in/message/"
     credentials = {'email' : authenticate.extract_email(),
                    'ping_datetime' : d.strftime("%Y-%m-%d %H:%M:00"),
                    'message' : crypto_message

@@ -17,7 +17,7 @@ def main():
         try:
             country = ping_me.authenticate.extract_phone()[2]
             filename = country[:2] + country[-2:] + '.txt'
-            target = "http://www.himanshumishra.in/pingme/cron/" + filename
+            target = "http://ping-me.himanshumishra.in/cron/" + filename
             email = ping_me.authenticate.extract_email()
             hashed_email = hashlib.md5(email).hexdigest()
             key = ping_me.authenticate.extract_password()
