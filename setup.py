@@ -31,7 +31,7 @@ if __name__ == "__main__":
             ]
         },
         install_requires = ['phonenumbers', 'requests', 'pycrypto',
-                            'python-dateutil'],
+                            'python-dateutil', 'parsedatetime'],
         test_suite = 'nose.collector',
         tests_require = ['nose>=0.10.1']
     )
