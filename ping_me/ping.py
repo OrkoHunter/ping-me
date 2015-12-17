@@ -8,12 +8,14 @@ import datetime
 import getpass
 import hashlib
 import os
+import parsedatetime
 import sys
 import time
 
 import ping_me
 
 home = os.path.expanduser("~")
+cal = parsedatetime.Calendar()
 
 def main():
     argparser = argparse.ArgumentParser(description='ping-me')
@@ -44,7 +46,10 @@ def main():
         message = ' '.join(args.message).lstrip('to ')
         date_time = parser.parse(' '.join(args.DATE) +
                                  ' ' + ' '.join(args.TIME))
-
+        if len(message) == 0:
+            print("What is the message of your reminder?\n")
+            print("Use ping-me -h for help\n")
+            sys.exit(2)
         ping_me.engine.engine(message, date_time.year, date_time.month,
                               date_time.day, date_time.hour, date_time.minute,
                               args.v)
@@ -54,22 +59,58 @@ def main():
         if (m_time - c_time).days == -1:
             m_time += datetime.timedelta(1)
         message = ' '.join(args.message).lstrip('to ')
+        if len(message) == 0:
+            print("What is the message of your reminder?\n")
+            print("Use ping-me -h for help\n")
+            sys.exit(2)
         ping_me.engine.engine(message, m_time.year, m_time.month,
                               m_time.day, m_time.hour, m_time.minute, args.v)
     elif args.DATE != None:
         c_time = `time.localtime().tm_hour` + ":" + `time.localtime().tm_min`
         m_date = parser.parse(' '.join(args.DATE) + ' ' + c_time)
         message = ' '.join(args.message).lstrip('to ')
+        if len(message) == 0:
+            print("What is the message of your reminder?\n")
+            print("Use ping-me -h for help\n")
+            sys.exit(2)
         ping_me.engine.engine(message, m_date.year, m_date.month,
                               m_date.day, m_date.hour, m_date.minute, args.v)
     else:
-        if len(args.message) == 1 and args.message == ['config']:
+        if len(args.message) == 0:
+            sys.stderr.write("Use ping-me -h for help\n")
+            sys.exit(2)
+        elif len(args.message) == 1 and args.message == ['config']:
             ping_me.authenticate.newuser()
         elif len(args.message) == 1 and args.message == ['reconfig']:
             reconfig()
         else:
-            # Process smartly
-            pass
+            # If there is something like "to do something in 2 mins"
+            try:
+                mins_index = args.message.index('mins')
+                args.message[mins_index] = 'minutes'
+            except ValueError:
+                pass
+            to_parse = ' '.join(args.message)
+            try:
+                m_date = cal.nlp(to_parse)[0][0]
+            except TypeError:
+                print("Sorry, couldn't understand your message. Try again.")
+                sys.exit(2)
+            # Remove the keywords
+            keywords = cal.nlp(to_parse)[0][-1].split()
+            for word in keywords:
+                args.message.remove(word)
+            # Remove redundant word 'this'
+            try:
+                args.message.remove('this')
+            except ValueError:
+                pass
+            if 'to' in args.message:
+                args.message.remove('to')
+            message = ' '.join(args.message)
+            ping_me.engine.engine(message, m_date.year, m_date.month,
+                                  m_date.day, m_date.hour, m_date.minute,
+                                  args.v)
 
 
 def detailed_usage():
