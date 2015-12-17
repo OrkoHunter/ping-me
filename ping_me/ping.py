@@ -8,12 +8,14 @@ import datetime
 import getpass
 import hashlib
 import os
+import parsedatetime
 import sys
 import time
 
 import ping_me
 
 home = os.path.expanduser("~")
+cal = parsedatetime.Calendar()
 
 def main():
     argparser = argparse.ArgumentParser(description='ping-me')
@@ -82,8 +84,33 @@ def main():
         elif len(args.message) == 1 and args.message == ['reconfig']:
             reconfig()
         else:
-            # Process smartly
-            pass
+            # If there is something like "to do something in 2 mins"
+            try:
+                mins_index = args.message.index('mins')
+                args.message[mins_index] = 'minutes'
+            except ValueError:
+                pass
+            to_parse = ' '.join(args.message)
+            try:
+                m_date = cal.nlp(to_parse)[0][0]
+            except TypeError:
+                print("Sorry, couldn't understand your message. Try again.")
+                sys.exit(2)
+            # Remove the keywords
+            keywords = cal.nlp(to_parse)[0][-1].split()
+            for word in keywords:
+                args.message.remove(word)
+            # Remove redundant word 'this'
+            try:
+                args.message.remove('this')
+            except ValueError:
+                pass
+            if 'to' in args.message:
+                args.message.remove('to')
+            message = ' '.join(args.message)
+            ping_me.engine.engine(message, m_date.year, m_date.month,
+                                  m_date.day, m_date.hour, m_date.minute,
+                                  args.v)
 
 
 def detailed_usage():
