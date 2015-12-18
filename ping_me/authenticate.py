@@ -1,6 +1,6 @@
 """The authentication module of ping-me"""
 
-import csv
+import ast
 import datetime
 import getpass
 import hashlib
@@ -140,7 +140,7 @@ def newuser():
     r = requests.post(target, data=credentials)
 
     if r.reason == "OK":
-        if eval(r.text)["success"]=="True":
+        if ast.literal_eval(r.text)["success"]=="True":
             config_file = open(home + '/.pingmeconfig', 'w+')
             config_file.write('[email]\n\t' + email + '\n')
             config_file.write('[password]\n\t' + password + '\n')
@@ -150,7 +150,7 @@ def newuser():
                               + save_password + "\n")
             config_file.close()
         else:
-            sys.stderr.write("\nERROR : " + eval(r.text)["reason"] + "\n")
+            sys.stderr.write("\nERROR : " + ast.literal_eval(r.text)["reason"] + "\n")
     else:
         sys.stderr.write("\nERROR : Problem on the server. Contact sysadmin\n")
 
