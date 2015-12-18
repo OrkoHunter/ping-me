@@ -44,7 +44,7 @@ def process(args):
         print(release.__version__)
         sys.exit(2)
 
-    if args.DATE != None and args.TIME != None:
+    if args.DATE is not None and args.TIME is not None:
         message = ' '.join(args.message).lstrip('to ')
         date_time = parser.parse(' '.join(args.DATE) +
                                  ' ' + ' '.join(args.TIME))
@@ -55,7 +55,7 @@ def process(args):
         ping_me.engine.engine(message, date_time.year, date_time.month,
                               date_time.day, date_time.hour, date_time.minute,
                               args.v)
-    elif args.TIME != None:
+    elif args.TIME is not None:
         m_time = parser.parse(' '.join(args.TIME))
         c_time = datetime.datetime.now()
         if (m_time - c_time).days == -1:
@@ -67,8 +67,9 @@ def process(args):
             sys.exit(2)
         ping_me.engine.engine(message, m_time.year, m_time.month,
                               m_time.day, m_time.hour, m_time.minute, args.v)
-    elif args.DATE != None:
-        c_time = `time.localtime().tm_hour` + ":" + `time.localtime().tm_min`
+    elif args.DATE is not None:
+        c_time = repr(time.localtime().tm_hour) + ":" + \
+                 repr(time.localtime().tm_min)
         m_date = parser.parse(' '.join(args.DATE) + ' ' + c_time)
         message = ' '.join(args.message).lstrip('to ')
         if len(message) == 0:
@@ -134,12 +135,12 @@ def detailed_usage():
           s*2 + f + s*7 + b + f + s*4 + p + s*3 + f + s*7)
     print(s + f + s*14 + f + s*4 + f + s*9 + b + s*2 + f + s + f + s*9 + f +
           s*2 + f + s*14 + p + s*2 + f + s*7)
-    print(f + s*11 + d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 + f
-          + s*15 + p + s + f + (r*4)[1:])
+    print(f + s*11 + d*4 + f + s*11 + b + f + s + f + (r*5)[1:] + f + s*2 +
+          f + s*15 + p + s + f + (r*4)[1:])
     print("")
-    print("ping-me works well with time and date flags already. "
-          + "Use 'ping-me -h' for that option. "
-          + "However, ping-me is smart enough to work without flags.\n")
+    print("ping-me works well with time and date flags already. " +
+          "Use 'ping-me -h' for that option. " +
+          "However, ping-me is smart enough to work without flags.\n")
     print("Examples : ")
     print("\t\t1. ping-me to call mom tonight")
     print("\t\t2. ping-me to buy milk early today")
@@ -147,9 +148,9 @@ def detailed_usage():
     print("\t\t4. ping-me to take a nap this afternoon")
     print("\t\t5. ping-me to go workout next month")
     print("")
-    print("Report (and track process on fixing) bugs on "
-          + "https://github.com/OrkoHunter/ping-me. Or simply write a mail "
-          + "to Himanshu Mishra at himanshumishra[at]iitkgp[dot]ac[dot]in")
+    print("Report (and track process on fixing) bugs on " +
+          "https://github.com/OrkoHunter/ping-me. Or simply write a mail " +
+          "to Himanshu Mishra at himanshumishra[at]iitkgp[dot]ac[dot]in")
 
 
 def reconfig():
