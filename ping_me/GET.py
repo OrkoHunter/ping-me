@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 """Receive request to show notification"""
-import urllib2
-import hashlib
+import requests
 import sys
 import subprocess
 import time
@@ -12,53 +11,33 @@ import ping_me
 
 def main():
     while(True):
-        # The try/except is for the case when the file might not exist
-        found = False
+        target = "http://ping-me.himanshumishra.in/ping/"
+        email = ping_me.authenticate.extract_email()
+        key = ping_me.authenticate.extract_password()
+        data_t = {
+            "email" : email,
+            "password" : key
+        }
         try:
-            country = ping_me.authenticate.extract_phone()[2]
-            filename = country[:2] + country[-2:] + '.txt'
-            target = "http://ping-me.himanshumishra.in/cron/" + filename
-            email = ping_me.authenticate.extract_email()
-            hashed_email = hashlib.md5(email).hexdigest()
-            key = ping_me.authenticate.extract_password()
-
-            data = urllib2.urlopen(target)
-
-            for line in data:
-                line = line.split()
-                if line[0] == hashed_email:
-                    # ping time!
-                    found = True
-                    message = cryptex.decryptor(key, line[1])
-                    if sys.platform == 'linux2':
-                        subprocess.call(['notify-send', message])
-                    elif sys.platform == 'darwin':
-                        subprocess.call(['terminal-notifier', '-title',
-                                         'ping-me', message])
-                    elif sys.platform in ['win32', 'win64']:
-                        # Do things for windows
-                        pass
-
-            # If not found in the country's name, search in XXXX.txt
-            if not found:
-                target = 'http://www.himanshumishra.in/pingme/cron/XXXX.txt'
-                data = urllib2.urlopen(target)
-                for line in data:
-                    line = line.split()
-                    if line[0] == hashed_email:
-                        found = True
-                        message = cryptex.decryptor(key, line[1])
-                        if sys.platform == 'linux2':
-                            subprocess.call(['notify-send', message])
-                        elif sys.platform == 'darwin':
-                            subprocess.call(['terminal-notifier', '-title',
-                                                 message])
-                        elif sys.platform in ['win32', 'win64']:
-                            # Do things for windows
-                            pass
-            time.sleep(4)
-        except:
-            time.sleep(4)
+            r = requests.post(target, data=data_t)
+            if eval(r.text)["success"] == "True":
+                message = cryptex.decryptor(key, eval(r.text)["message"])
+                # Recieved the ping 5 seconds earlier
+                time.sleep(5)
+                if sys.platform == 'linux2':
+                    subprocess.call(['notify-send', message])
+                elif sys.platform == 'darwin':
+                    # Need to install `terminal-notifier`
+                    # $ brew install terminal-notifier
+                    subprocess.call(['terminal-notifier', '-title',
+                                     'ping-me', message])
+                elif sys.platform in ['win32', 'win64']:
+                    # Do things for windows
+                    pass
+            else:
+                time.sleep(1)
+        except Exception as e:
+            print(e)
 
 if __name__ == '__main__':
     main()
