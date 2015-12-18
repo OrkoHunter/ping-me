@@ -8,7 +8,7 @@ import subprocess
 import time
 
 from ping_me.utils import cryptex
-import ping_me
+import ping_me.authenticate
 
 def main():
     while(True):

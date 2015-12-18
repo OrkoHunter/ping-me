@@ -11,7 +11,8 @@ import parsedatetime
 import sys
 import time
 
-import ping_me
+import ping_me.authenticate
+import ping_me.engine
 
 home = os.path.expanduser("~")
 cal = parsedatetime.Calendar()

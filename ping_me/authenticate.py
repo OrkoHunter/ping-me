@@ -10,7 +10,6 @@ import requests
 import sys
 
 import phonenumbers
-import ping_me
 from ping_me.data import countrylist
 
 home = os.path.expanduser("~")
@@ -157,7 +156,7 @@ def newuser():
 
 def olduser():
     password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
-    if password == ping_me.authenticate.extract_password():
+    if password == extract_password():
         sys.stdout.write("Do you want to save this password? (y/N) : ")
         opt = sys.stdin.read(1)
         if opt == 'y':
