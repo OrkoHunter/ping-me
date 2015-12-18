@@ -18,6 +18,7 @@ home = os.path.expanduser("~")
 cal = parsedatetime.Calendar()
 
 def main():
+    """Parse the arguments using argparse package"""
     argparser = argparse.ArgumentParser(description='ping-me')
 
     argparser.add_argument("-e", action="store_true", default=False)
@@ -36,6 +37,7 @@ def main():
 
 
 def process(args):
+    """Process the arguments. Call engine if flags are used."""
     if args.e:
         detailed_usage()
         sys.exit(2)
@@ -90,6 +92,7 @@ def process(args):
             nlp_process(args)
 
 def nlp_process(args):
+    """Process arguments using Natural Language Processing."""
     # If there is something like "to do something in 2 mins"
     try:
         mins_index = args.message.index('mins')
@@ -120,6 +123,7 @@ def nlp_process(args):
 
 
 def detailed_usage():
+    """Detailed documentation of ping-me."""
     print("Welcome to the detailed documentation of ping-me !")
     # Inspired from 'import this'
     s = " "; l = "_ "; r = " _"; f = "/"; b = "\\"; p = "|"; d = "— "
@@ -154,6 +158,7 @@ def detailed_usage():
 
 
 def reconfig():
+    """Reconfigure the user. Removes all the information of existing one."""
     if not os.path.exists(home + "/.pingmeconfig"):
         ping_me.authenticate.newuser()
     else:
@@ -166,5 +171,4 @@ def reconfig():
             sys.exit(2)
 
 if __name__ == "__main__":
-
     main()
