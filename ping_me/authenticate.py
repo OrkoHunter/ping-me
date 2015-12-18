@@ -20,7 +20,7 @@ def extract_email():
     email = ""
     next_one = False  # If true then the next line contains our result
     for line in f.readlines():
-        if next_one == True:
+        if next_one is True:
             email = line.lstrip().rstrip()
             break
         elif line == "[email]\n":
@@ -38,7 +38,7 @@ def extract_password():
     password = ""
     next_one = False  # If true then the next line contains our result
     for line in f.readlines():
-        if next_one == True:
+        if next_one is True:
             password = line.lstrip().rstrip()
             break
         elif line == "[password]\n":
@@ -56,7 +56,7 @@ def extract_phone():
     phone = ""
     next_one = False  # If true then the next line contains our result
     for line in f.readlines():
-        if next_one == True:
+        if next_one is True:
             phone = line.split()
             break
         elif line == "[phone]\n":
@@ -73,7 +73,7 @@ def check_saved_password():
     f = open(home + '/.pingmeconfig', 'r')
     next_one = False
     for line in f.readlines():
-        if next_one == True:
+        if next_one is True:
             return True if "YES" in line.split() else False
         if line == "[preference]\n":
             next_one = True
