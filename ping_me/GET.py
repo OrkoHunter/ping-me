@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 """Receive request to show notification"""
+import ast
 import requests
 import sys
 import subprocess
@@ -20,8 +21,8 @@ def main():
         }
         try:
             r = requests.post(target, data=data_t)
-            if eval(r.text)["success"] == "True":
-                message = cryptex.decryptor(key, eval(r.text)["message"])
+            if ast.literal_eval(r.text)["success"] == "True":
+                message = cryptex.decryptor(key, ast.literal_eval(r.text)["message"])
                 # Recieved the ping 5 seconds earlier
                 time.sleep(5)
                 if sys.platform == 'linux2':

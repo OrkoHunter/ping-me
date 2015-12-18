@@ -3,7 +3,6 @@
 from __future__ import print_function
 from dateutil import parser
 import argparse
-import calendar
 import datetime
 import getpass
 import hashlib
