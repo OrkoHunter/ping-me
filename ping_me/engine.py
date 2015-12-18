@@ -8,7 +8,7 @@ import requests
 import sys
 import time
 
-from ping_me import authenticate
+import ping_me.authenticate
 from ping_me.utils import cryptex
 
 today = datetime.date.today()
@@ -18,10 +18,10 @@ home = os.path.expanduser("~")
 def engine(message, year, month, day, hour=0, minute=0, v=False):
     """Sets the reminder"""
     if not os.path.exists(home + '/.pingmeconfig'):
-        authenticate.newuser()
+        ping_me.authenticate.newuser()
     else:
-        if not authenticate.check_saved_password():
-            authenticate.olduser()
+        if not ping_me.authenticate.check_saved_password():
+            ping_me.authenticate.olduser()
 
     d = datetime.datetime(year, month, day, hour, minute)
     if d < datetime.datetime.now():
@@ -40,10 +40,10 @@ def engine(message, year, month, day, hour=0, minute=0, v=False):
 
     extra = ' '*(16*(len(message)//16 + 1) - len(message))
     crypto_message = message + extra
-    crypto_message = cryptex.encryptor(authenticate.extract_password(),
+    crypto_message = cryptex.encryptor(ping_me.authenticate.extract_password(),
                                        crypto_message)
     target = "http://ping-me.himanshumishra.in/message/"
-    credentials = {'email' : authenticate.extract_email(),
+    credentials = {'email' : ping_me.authenticate.extract_email(),
                    'ping_datetime' : d.strftime("%Y-%m-%d %H:%M:00"),
                    'message' : crypto_message
                    }
