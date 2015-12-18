@@ -16,6 +16,7 @@ home = os.path.expanduser("~")
 
 
 def extract_email():
+    """Return the email address of user stored locally"""
     f = open(home + '/.pingmeconfig', 'r')
     email = ""
     next_one = False  # If true then the next line contains our result
@@ -34,6 +35,7 @@ def extract_email():
 
 
 def extract_password():
+    """Return the hashed password of the user stored locally"""
     f = open(home + '/.pingmeconfig', 'r')
     password = ""
     next_one = False  # If true then the next line contains our result
@@ -52,6 +54,7 @@ def extract_password():
 
 
 def extract_phone():
+    """Return a tuple including phone number of the user stored locally"""
     f = open(home + '/.pingmeconfig', 'r')
     phone = ""
     next_one = False  # If true then the next line contains our result
@@ -70,6 +73,7 @@ def extract_phone():
 
 
 def check_saved_password():
+    """Return True if the user has opted to save password"""
     f = open(home + '/.pingmeconfig', 'r')
     next_one = False
     for line in f.readlines():
@@ -80,6 +84,22 @@ def check_saved_password():
 
 
 def newuser():
+    """Authenticate a new user for the first time.
+
+    Creates a file `.pingmeconfig` inside home folder.
+
+    Parameters
+    ----------
+    email : string
+        Email address of the user (unverified)
+    password : string
+        Password of the user (Stored using hashlib)
+    phone_numer = string
+        Phone number including country code (India, by default)
+    save_password = bool
+        Prompt for password for each ping
+
+    """
     EMAIL_REGEX = re.compile(r"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
 
     sys.stdout.write("Email : ")
@@ -155,6 +175,7 @@ def newuser():
 
 
 def olduser():
+    """Authenticate an olduser"""
     password = hashlib.md5(getpass.getpass().rstrip()).hexdigest()
     if password == extract_password():
         sys.stdout.write("Do you want to save this password? (y/N) : ")
