@@ -20,7 +20,7 @@ Stay Lazy, Stay Updated !
  - [X] `ping-me` stores the message with datetime stamp on the server
  - [X] Server activates the ping 50 seconds prior to its exact time
  - [X] Server ready for a GET request
- - [ ] `ping-me` makes full use of natural language processing
+ - [X] `ping-me` makes full use of natural language processing
  - [ ] `ping-me` notifies through chrome/firefox extension
  - [X] `ping-me` works on linux
  - [ ] `ping-me` works on windows
@@ -30,18 +30,33 @@ Stay Lazy, Stay Updated !
  - [ ] `ping-me` ping-me works on ios
  - [ ] `ping-me` works on Windows phone
 
-__Current Release__ - [0.2](https://github.com/OrkoHunter/ping-me/tree/v0.2)
+__Current Release__ - [0.3](https://github.com/OrkoHunter/ping-me/tree/v0.2)
 
 ## Installation
 
-### From GitHub
+__Step 1 :__ Installing package and dependencies
 ```sh
-$ pip install https://github.com/OrkoHunter/ping-me/archive/master.zip
+$ pip install ping-me
 ```
+Make sure all the dependencies get installed properly while the installation.
 
-__Using pip (To be done)__
+__Step 2 :__ Setting up cronjob
+```sh
+$ crontab -e
+```
+In the file, add the following lines
+```
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DISPLAY=:0.0
 
-__Using apt-get (To be done)__
+* * * * * get-ping
+```
+_Make sure to leave a blank line at the end of the file._
+
+Save and exit. The installation is complete.
+
+_See [this](https://github.com/OrkoHunter/ping-me/pull/22#issue-122990856) for
+some explanation of the crontab_
 
 ## Usage
 
@@ -56,3 +71,5 @@ respectively. Go ahead and make experiments with the syntax.
 ```sh
 $ ping-me to get up and eat tomorrow afternoon
 ```
+
+_Add `-v` flag at the end to see the verbose output._
