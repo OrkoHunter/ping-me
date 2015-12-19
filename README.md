@@ -13,26 +13,9 @@ Stay Lazy, Stay Updated !
 
 ![alt text](bin/ping-me-e.png "ping-me -e")
 
-## Project Status
- - [X] `ping-me` identifies date, time and message using flags
- - [X] `ping-me` asks for configuration on first request
- - [X] `ping-me` stores the configuration on remote server
- - [X] `ping-me` stores the message with datetime stamp on the server
- - [X] Server activates the ping 50 seconds prior to its exact time
- - [X] Server ready for a GET request
- - [X] `ping-me` makes full use of natural language processing
- - [ ] `ping-me` notifies through chrome/firefox extension
- - [X] `ping-me` works on linux
- - [ ] `ping-me` works on windows
- - [ ] `ping-me` works on OS X
- - [ ] `ping-me` works on Android
- - [ ] `ping-me` sends texts to phone
- - [ ] `ping-me` ping-me works on ios
- - [ ] `ping-me` works on Windows phone
+## Installation
 
 __Current Release__ - [0.3](https://github.com/OrkoHunter/ping-me/tree/v0.2)
-
-## Installation
 
 __Step 1 :__ Installing package and dependencies
 ```sh
@@ -73,3 +56,22 @@ $ ping-me to get up and eat tomorrow afternoon
 ```
 
 _Add `-v` flag at the end to see the verbose output._
+
+## Project Status
+ - [X] `ping-me` identifies date, time and message using flags
+ - [X] `ping-me` asks for configuration on first request
+ - [X] `ping-me` stores the configuration on remote server
+ - [X] `ping-me` stores the message with datetime stamp on the server
+ - [X] Server activates the ping 50 seconds prior to its exact time
+ - [X] Server ready for a GET request
+ - [X] `ping-me` makes full use of natural language processing
+ - [ ] `ping-me` notifies through chrome/firefox extension
+ - [X] `ping-me` works on linux
+ - [ ] `ping-me` works on windows
+ - [ ] `ping-me` works on OS X
+ - [ ] `ping-me` works on Android
+ - [ ] `ping-me` sends texts to phone
+ - [ ] `ping-me` ping-me works on ios
+ - [ ] `ping-me` works on Windows phone
+
+__Contribution__ : Please feel free to report bugs in the application. I'll try to fix them. Also, if either of javascript or android is your piece of cake, please contact me and we'll make things up real quick. Enjoy anyways!
