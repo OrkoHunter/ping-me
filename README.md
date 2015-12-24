@@ -23,7 +23,7 @@ $ pip install ping-me
 ```
 Make sure all the dependencies get installed properly while the installation.
 
-__Step 2 :__ Setting up cronjob
+__Step 2 :__ Setting up cronjob (Not for windows, See step 3)
 ```sh
 $ crontab -e
 ```
@@ -40,6 +40,14 @@ Save and exit. The installation is complete.
 
 _See [this](https://github.com/OrkoHunter/ping-me/pull/22#issue-122990856) for
 some explanation of the crontab_
+
+__Step 3 :__ Chrome Extension
+
+Download the chrome extension from [here](https://chrome.google.com/webstore/detail/ping-me/blcdkjncblkniknjkkcmlbfddeemidap).
+
+Log in with the credentials you used for ping-me. And we are done.
+
+_Note : ping-me will work even if all chrome windows are closed._
 
 ## Usage
 
@@ -65,7 +73,7 @@ _Add `-v` flag at the end to see the verbose output._
  - [X] Server activates the ping 50 seconds prior to its exact time
  - [X] Server ready for a GET request
  - [X] `ping-me` makes full use of natural language processing
- - [ ] `ping-me` notifies through chrome/firefox extension
+ - [X] `ping-me` notifies through chrome/firefox extension
  - [X] `ping-me` works on linux
  - [ ] `ping-me` works on windows
  - [ ] `ping-me` works on OS X
@@ -74,4 +82,4 @@ _Add `-v` flag at the end to see the verbose output._
  - [ ] `ping-me` ping-me works on ios
  - [ ] `ping-me` works on Windows phone
 
-__Contribution__ : Please feel free to report bugs in the application. I'll try to fix them. Also, if either of javascript or android is your piece of cake, please contact me and we'll make things up real quick. Enjoy anyways!
+__Contribution__ : Please feel free to report bugs in the application. I'll try to fix them. Also, if either of ~~javascript~~ or android is your piece of cake, please contact me and we'll make things up real quick. Enjoy anyways!
