@@ -75,8 +75,8 @@ _Add `-v` flag at the end to see the verbose output._
  - [X] `ping-me` makes full use of natural language processing
  - [X] `ping-me` notifies through chrome/firefox extension
  - [X] `ping-me` works on linux
- - [ ] `ping-me` works on windows
- - [ ] `ping-me` works on OS X
+ - [X] `ping-me` works on windows
+ - [X] `ping-me` works on OS X
  - [ ] `ping-me` works on Android
  - [ ] `ping-me` sends texts to phone
  - [ ] `ping-me` ping-me works on ios
