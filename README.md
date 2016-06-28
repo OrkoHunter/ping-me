@@ -3,6 +3,8 @@
 # ping-me
 A Cross Platform personalized Ping
 
+**NOTE : The server is not being maintained right now. (Because my student pack expired)**
+
 The beauty of `ping-me` is its command line interface. Get all of your
 reminders done just by a single line command on your favorite terminal
 screen. `ping-me` will *surely* ping you at that time, no matter you
