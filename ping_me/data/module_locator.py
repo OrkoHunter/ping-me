@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Locate the data files in the eggs to open."""
 
 # NOTE : This module is redundant now. It was used to locate the csv file
