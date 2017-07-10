@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Command line execution listener module of ping-me"""
 from __future__ import print_function
- from __future__ import unicode_literals
+from __future__ import unicode_literals
 from dateutil import parser
 import argparse
 import datetime
