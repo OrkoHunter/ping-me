@@ -1,9 +1,24 @@
-[![pypi version](https://img.shields.io/pypi/v/ping-me.svg)](https://github.com/OrkoHunter/ping-me/tree/v0.2)
+
+# Note from the author
+
+I no longer work on this project. Maintaining a server and other extensions to store reminders and execute them on time takes a lot of effort. There are gigantic companies and startups working on this. It also made me hit my first burnout because I thought I could make everything on my own in a short duration of time. I'm thankful I learnt this early.
+
+I agressively use Google Calendar which sends me all kinds of reminders aka _Pings :')_ and thus instead of re-inventing the wheel, I think I can work on new ideas. Plus, there exists quite a lot of tools which interface with Google Calendar from the command line and and they take care of NLP as well. Thus, I feel there is no _need_ to revive the project.
+
+It was a good run. Thanks to the 300 registered and other anonymous users for giving chills to an 18 year old kid, on one of his first pet projects.
+
+April 20, 2018
+
+TLDR: Have a look at [gcalcli](https://github.com/insanum/gcalcli) or [khal](https://github.com/pimutils/khal/blob/master/khal/cli.py).
+
+---
+
 [![Code Health](https://landscape.io/github/OrkoHunter/ping-me/master/landscape.svg?style=flat)](https://landscape.io/github/OrkoHunter/ping-me/master)
 # ping-me
 A Cross Platform personalized Ping
 
-**NOTE : The server is not being maintained right now. (Because my student pack expired)**
+**NOTE : The server is not being maintained right now. (Because my GitHub student pack expired)**
+
 
 The beauty of `ping-me` is its command line interface. Get all of your
 reminders done just by a single line command on your favorite terminal
@@ -12,8 +27,6 @@ are online or not. It will get to you on your phone device, smart watch
 and even SMS in worst cases.
 
 Stay Lazy, Stay Updated !
-
-![alt text](bin/ping-me-e.png "ping-me -e")
 
 ## Installation
 
